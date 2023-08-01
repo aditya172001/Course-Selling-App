@@ -20,7 +20,7 @@ async function adminSignup(req, res) {
 }
 
 async function adminLogin(req, res) {
-  const { username, password } = req.headers;
+  const { username, password } = req.body;
   try {
     const admin = await Admin.findOne({ username, password });
     if (!admin) {
@@ -74,10 +74,21 @@ async function getAllCourses(req, res) {
   }
 }
 
+async function deleteCourse(req, res) {
+  const { courseId } = req.params;
+  try {
+    const courses = await Course.findByIdAndDelete(courseId);
+    res.json({ message: "Course deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   adminSignup,
   adminLogin,
   createCourse,
   updateCourse,
   getAllCourses,
+  deleteCourse,
 };

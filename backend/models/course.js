@@ -14,11 +14,11 @@ const courseSchema = new mongoose.Schema({
     required: true,
     min: 300,
   },
-  imageLink: {
+  imageURL: {
     type: String,
     required: true,
   },
-  published: {
+  isPublished: {
     type: Boolean,
     required: true,
   },

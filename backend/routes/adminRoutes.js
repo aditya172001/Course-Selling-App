@@ -14,13 +14,16 @@ router.post("/login", adminController.adminLogin);
 // Admin authentication middleware
 router.use(validateAdminCredentials);
 
-// Create Course
+// Create A Course
 router.post("/courses", adminController.createCourse);
 
-// Update Course
+// Update A Course
 router.put("/courses/:courseId", adminController.updateCourse);
 
 // Get All Courses
 router.get("/courses", adminController.getAllCourses);
+
+// Delete A Course
+router.delete("/courses/:courseId", adminController.deleteCourse);
 
 module.exports = router;

@@ -22,7 +22,7 @@ async function userSignup(req, res) {
 }
 
 async function userLogin(req, res) {
-  const { username, password } = req.headers;
+  const { username, password } = req.body;
   try {
     const user = await User.findOne({ username, password });
     if (!user) {
