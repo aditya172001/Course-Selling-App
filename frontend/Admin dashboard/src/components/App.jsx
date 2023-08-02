@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import AdminDashboard from "./adminDashboard";
 import Courses from "./courses";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 import FormAddCourse from "./form-add-course";
 import FormUpdateCourse from "./form-update-course";
 import Register from "./register";

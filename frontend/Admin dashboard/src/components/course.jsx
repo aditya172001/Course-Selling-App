@@ -1,13 +1,11 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import ModalDeleteCourse from "./modalDeleteCourse";
 
 export default function Course({
   _id,
@@ -17,25 +15,8 @@ export default function Course({
   setCourses,
 }) {
   const navigate = useNavigate();
-  const deleteURL = `http://localhost:3000/admin/courses/${_id}`;
-
   function handleUpdate() {
     navigate("/courses/update", { state: _id });
-  }
-
-  function handleDelete() {
-    axios
-      .delete(deleteURL, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
-        },
-      })
-      .then(() => {
-        setCourses((courses) => courses.filter((course) => course._id !== _id));
-      })
-      .catch((err) => {
-        console.error("Error in delting data", err);
-      });
   }
 
   return (
@@ -50,18 +31,15 @@ export default function Course({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" onClick={handleUpdate}>
-          Update
-        </Button>
         <Button
           size="small"
           variant="contained"
-          color="error"
-          onClick={handleDelete}
-          endIcon={<DeleteIcon />}
+          onClick={handleUpdate}
+          sx={{ marginRight: "10px" }}
         >
-          Delete
+          Update
         </Button>
+        <ModalDeleteCourse _id={_id} setCourses={setCourses} />
       </CardActions>
     </Card>
   );

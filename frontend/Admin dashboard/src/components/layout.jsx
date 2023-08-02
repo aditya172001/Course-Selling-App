@@ -16,8 +16,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { createSvgIcon } from "@mui/material/utils";
+import ModalLogout from "./modalLogout";
 
 const HomeIcon = createSvgIcon(
   <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />,
@@ -118,12 +119,6 @@ export default function Layout({
   function handleLogin() {
     navigate("/login");
   }
-  function handleLogout() {
-    localStorage.removeItem("admintoken");
-    setIsRegistered(false);
-    setIsLoggedin(false);
-    navigate("/");
-  }
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#f5fdff", height: "100vh" }}>
@@ -151,9 +146,10 @@ export default function Layout({
               </Button>
             )}
             {isLoggedin === true ? (
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
-              </Button>
+              <ModalLogout
+                setIsRegistered={setIsRegistered}
+                setIsLoggedin={setIsLoggedin}
+              />
             ) : (
               <Button color="inherit" onClick={handleLogin}>
                 Login
