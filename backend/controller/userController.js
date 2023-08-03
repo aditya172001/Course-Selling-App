@@ -40,7 +40,7 @@ async function userLogin(req, res) {
 
 async function getUserCourses(req, res) {
   try {
-    const courses = await Course.find({ published: true });
+    const courses = await Course.find({ isPublished: true });
     res.json(courses);
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
