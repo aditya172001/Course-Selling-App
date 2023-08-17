@@ -17,9 +17,8 @@ export default function FormAddCourse({ setCourses }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [price, setPrice] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
-  const [error, setError] = useState(null);
+  const [price, setPrice] = useState<"" | number>("");
+  const [isPublished, setIsPublished] = useState<boolean>(false);
 
   function handleAddCourse(e) {
     e.preventDefault();
@@ -37,14 +36,15 @@ export default function FormAddCourse({ setCourses }) {
         },
       })
       .then((res) => {
-        setCourses((courses) => [...courses, { _id: res.courseID, newCourse }]);
-        setError(null);
+        setCourses((courses) => [
+          ...courses,
+          { _id: res.data.courseID, newCourse },
+        ]);
         console.log(res);
         navigate("/courses");
       })
       .catch((err) => {
         console.log(err);
-        setError("Error adding course. Please try again later.");
         setTitle("");
         setDescription("");
         setImageURL("");
@@ -110,7 +110,7 @@ export default function FormAddCourse({ setCourses }) {
           <Select
             labelId="demo-simple-select-label"
             value={isPublished}
-            onChange={(e) => setIsPublished(e.target.value)}
+            onChange={(e) => setIsPublished(e.target.value as boolean)}
             fullWidth
             margin="dense"
           >

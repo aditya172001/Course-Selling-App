@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import Course from "./course";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 const getCoursesURL = "http://localhost:3000/admin/courses";

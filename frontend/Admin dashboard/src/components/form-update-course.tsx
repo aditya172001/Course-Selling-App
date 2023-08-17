@@ -15,9 +15,8 @@ export default function FormUpdateCourse({ setCourses }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [price, setPrice] = useState("");
-  const [isPublished, setIsPublished] = useState(false);
-  const [error, setError] = useState(null);
+  const [price, setPrice] = useState<"" | number>("");
+  const [isPublished, setIsPublished] = useState<boolean>(false);
   const location = useLocation();
   const courseId = location.state;
   const putURL = `http://localhost:3000/admin/courses/${courseId}`;
@@ -37,18 +36,16 @@ export default function FormUpdateCourse({ setCourses }) {
           Authorization: `Bearer ${localStorage.getItem("admintoken")}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         setCourses((courses) =>
           courses.map((course) =>
             course._id !== courseId ? course : { ...course, ...updatedCourse }
           )
         );
-        setError(null);
         navigate("/courses");
       })
       .catch((err) => {
         console.log(err);
-        setError("Error adding course. Please try again later.");
         setTitle("");
         setDescription("");
         setImageURL("");
@@ -114,7 +111,7 @@ export default function FormUpdateCourse({ setCourses }) {
           <Select
             labelId="demo-simple-select-label"
             value={isPublished}
-            onChange={(e) => setIsPublished(e.target.value)}
+            onChange={(e) => setIsPublished(e.target.value as boolean)}
             fullWidth
             margin="dense"
           >

@@ -21,16 +21,16 @@ export default function Landing({ isRegistered, isLoggedin }) {
       >
         <div style={{ margin: "50px" }}>
           <Typography variant="h4" fontWeight={600} marginBottom="60px">
-            User dashbord
+            Admin dashbord
           </Typography>
-          <Button variant="contained" margin="20px" onClick={handleViewCourses}>
+          <Button variant="contained" sx={{margin:"20px"}} onClick={handleViewCourses}>
             View Courses
           </Button>
         </div>
         <div>
           <img
-            src="https://images.unsplash.com/photo-1532073145718-62df48eaa35e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3R1ZHklMjBhZXN0aGV0aWN8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-            alt="User Dashboard Image"
+            src="https://images.unsplash.com/photo-1516397281156-ca07cf9746fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+            alt="Admin Dashboard Image"
             style={{ maxWidth: "700px" }}
           />
         </div>
