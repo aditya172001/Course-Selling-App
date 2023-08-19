@@ -2,13 +2,16 @@ import PurchasedCourse from "./purchasedCourse";
 import NoPurchasedCourseFound from "./noCoursePurchased";
 import { useEffect } from "react";
 import axios from "axios";
+import React from "react";
+import { useRecoilState } from "recoil";
+import { purchasedCoursesState } from "../recoil/myatoms";
 
 const getPurchasedCoursesURL = "http://localhost:3000/user/purchasedCourses";
 
-export default function PurchasedCourses({
-  purchasedCourses,
-  setPurchasedCourses,
-}) {
+export default function PurchasedCourses() {
+  const [purchasedCourses, setPurchasedCourses] = useRecoilState(
+    purchasedCoursesState
+  );
   useEffect(() => {
     axios
       .get(getPurchasedCoursesURL, {

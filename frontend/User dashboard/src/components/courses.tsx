@@ -1,10 +1,13 @@
 import Course from "./course";
 import { useEffect } from "react";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { coursesState } from "../recoil/myatoms";
 
 const getCoursesURL = "http://localhost:3000/user/courses";
 
-export default function Courses({ courses, setCourses }) {
+export default function Courses() {
+  const [courses, setCourses] = useRecoilState(coursesState);
   useEffect(() => {
     axios
       .get(getCoursesURL, {

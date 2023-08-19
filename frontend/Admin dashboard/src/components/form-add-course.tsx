@@ -9,10 +9,13 @@ import {
   Button,
   Card,
 } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { coursesState } from "../recoil/myatoms";
 
 const postURL = "http://localhost:3000/admin/courses";
 
-export default function FormAddCourse({ setCourses }) {
+export default function FormAddCourse() {
+  const setCourses = useSetRecoilState(coursesState);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

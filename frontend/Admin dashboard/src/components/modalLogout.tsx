@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { loginState, registerState } from "../recoil/myatoms";
 
 const style = {
   position: "absolute",
@@ -18,9 +20,12 @@ const style = {
   borderRadius: "10px",
 };
 
-export default function ModalDeleteCourse({ setIsRegistered, setIsLoggedin }) {
+export default function ModalDeleteCourse() {
+  const setIsRegistered = useSetRecoilState(registerState);
+  const setIsLoggedin = useSetRecoilState(loginState);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+
   function handleOpen() {
     setOpen(true);
   }

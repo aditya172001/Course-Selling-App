@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -20,6 +19,8 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import { Button } from "@mui/material";
 import { createSvgIcon } from "@mui/material/utils";
 import ModalLogout from "./modalLogout";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { drawerOpenState, loginState, registerState } from "../recoil/myatoms";
 
 const HomeIcon = createSvgIcon(
   <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />,
@@ -77,14 +78,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function Layout({
-  isRegistered,
-  isLoggedin,
-  setIsRegistered,
-  setIsLoggedin,
-  children,
-}) {
-  const [open, setOpen] = useState(false);
+export default function Layout({ children }) {
+  const isRegistered = useRecoilValue(registerState);
+  const isLoggedin = useRecoilValue(loginState);
+  const [open, setOpen] = useRecoilState(drawerOpenState);
   const navigate = useNavigate();
   function handleDrawerOpen() {
     setOpen(true);
@@ -135,10 +132,7 @@ export default function Layout({
               </Button>
             )}
             {isLoggedin === true ? (
-              <ModalLogout
-                setIsRegistered={setIsRegistered}
-                setIsLoggedin={setIsLoggedin}
-              />
+              <ModalLogout />
             ) : (
               <Button color="inherit" onClick={handleLogin}>
                 Login

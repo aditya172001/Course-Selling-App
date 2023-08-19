@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AdminDashboard from "./adminDashboard";
 import Courses from "./courses";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -8,17 +8,14 @@ import Register from "./register";
 import Login from "./login";
 import Layout from "./layout";
 import axios from "axios";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { coursesState, loginState } from "../recoil/myatoms";
 
 const getCoursesURL = "http://localhost:3000/admin/courses";
 
 function App() {
-  const [isRegistered, setIsRegistered] = useState(
-    localStorage.getItem("admintoken") ? true : false
-  );
-  const [isLoggedin, setIsLoggedin] = useState(
-    localStorage.getItem("admintoken") ? true : false
-  );
-  const [courses, setCourses] = useState([]);
+  const isLoggedin = useRecoilValue(loginState);
+  const setCourses = useSetRecoilState(coursesState);
 
   useEffect(() => {
     if (isLoggedin) {
@@ -35,51 +32,18 @@ function App() {
           console.error("Error in fetching courses data.", err);
         });
     }
-  }, [isLoggedin]);
+  }, [isLoggedin, setCourses]);
 
   return (
     <Router>
-      <Layout
-        isLoggedin={isLoggedin}
-        isRegistered={isRegistered}
-        setIsRegistered={setIsRegistered}
-        setIsLoggedin={setIsLoggedin}
-      >
+      <Layout>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <AdminDashboard
-                isRegistered={isRegistered}
-                isLoggedin={isLoggedin}
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={<Register setIsRegistered={setIsRegistered} />}
-          />
-          <Route
-            path="/login"
-            element={
-              <Login
-                setIsRegistered={setIsRegistered}
-                setIsLoggedin={setIsLoggedin}
-              />
-            }
-          />
-          <Route
-            path="/courses"
-            element={<Courses courses={courses} setCourses={setCourses} />}
-          />
-          <Route
-            path="/courses/add"
-            element={<FormAddCourse setCourses={setCourses} />}
-          />
-          <Route
-            path="/courses/update"
-            element={<FormUpdateCourse setCourses={setCourses} />}
-          />
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/add" element={<FormAddCourse />} />
+          <Route path="/courses/update" element={<FormUpdateCourse />} />
         </Routes>
       </Layout>
     </Router>

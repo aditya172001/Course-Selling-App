@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Typography, Button } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { loginState, registerState } from "../recoil/myatoms";
 
-export default function Landing({ isRegistered, isLoggedin }) {
+export default function Landing() {
+  const isRegistered = useRecoilValue(registerState);
+  const isLoggedin = useRecoilValue(loginState);
   const navigate = useNavigate();
   function handleViewCourses() {
     if (isRegistered && isLoggedin) navigate("/courses");

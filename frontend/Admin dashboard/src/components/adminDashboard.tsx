@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Typography, Button } from "@mui/material";
+import { useRecoilValue } from "recoil";
+import { loginState, registerState } from "../recoil/myatoms";
 
-export default function Landing({ isRegistered, isLoggedin }) {
+export default function Landing() {
+  const isRegistered = useRecoilValue(registerState);
+  const isLoggedin = useRecoilValue(loginState);
   const navigate = useNavigate();
   function handleViewCourses() {
     if (isRegistered && isLoggedin) navigate("/courses");
@@ -23,7 +27,11 @@ export default function Landing({ isRegistered, isLoggedin }) {
           <Typography variant="h4" fontWeight={600} marginBottom="60px">
             Admin dashbord
           </Typography>
-          <Button variant="contained" sx={{margin:"20px"}} onClick={handleViewCourses}>
+          <Button
+            variant="contained"
+            sx={{ margin: "20px" }}
+            onClick={handleViewCourses}
+          >
             View Courses
           </Button>
         </div>

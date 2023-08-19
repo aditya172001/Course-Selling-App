@@ -9,8 +9,11 @@ import {
   Button,
   Card,
 } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { coursesState } from "../recoil/myatoms";
 
-export default function FormUpdateCourse({ setCourses }) {
+export default function FormUpdateCourse() {
+  const setCourses = useSetRecoilState(coursesState);
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layout";
 import UserDashboard from "./userDashboard";
@@ -8,18 +8,14 @@ import Courses from "./courses";
 import PurchasedCourses from "./purchasedCourses";
 import BuyCourse from "./buyCourse";
 import axios from "axios";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { coursesState, loginState } from "../recoil/myatoms";
 
 const getCoursesURL = "http://localhost:3000/user/courses";
 
 function App() {
-  const [isRegistered, setIsRegistered] = useState(
-    localStorage.getItem("usertoken") ? true : false
-  );
-  const [isLoggedin, setIsLoggedin] = useState(
-    localStorage.getItem("usertoken") ? true : false
-  );
-  const [courses, setCourses] = useState([]);
-  const [purchasedCourses, setPurchasedCourses] = useState([]);
+  const isLoggedin = useRecoilValue(loginState);
+  const setCourses = useSetRecoilState(coursesState);
 
   useEffect(() => {
     if (isLoggedin) {
@@ -36,53 +32,18 @@ function App() {
           console.error("Error in fetching courses data.", err);
         });
     }
-  }, [isLoggedin]);
+  }, [isLoggedin, setCourses]);
 
   return (
     <Router>
-      <Layout
-        isLoggedin={isLoggedin}
-        isRegistered={isRegistered}
-        setIsRegistered={setIsRegistered}
-        setIsLoggedin={setIsLoggedin}
-      >
+      <Layout>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <UserDashboard
-                isRegistered={isRegistered}
-                isLoggedin={isLoggedin}
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={<Register setIsRegistered={setIsRegistered} />}
-          />
-          <Route
-            path="/login"
-            element={
-              <Login
-                setIsRegistered={setIsRegistered}
-                setIsLoggedin={setIsLoggedin}
-              />
-            }
-          />
-          <Route
-            path="/courses"
-            element={<Courses courses={courses} setCourses={setCourses} />}
-          />
+          <Route path="/" element={<UserDashboard />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/courses" element={<Courses />} />
           <Route path="/courses/buy" element={<BuyCourse />} />
-          <Route
-            path="/courses/purchased"
-            element={
-              <PurchasedCourses
-                purchasedCourses={purchasedCourses}
-                setPurchasedCourses={setPurchasedCourses}
-              />
-            }
-          />
+          <Route path="/courses/purchased" element={<PurchasedCourses />} />
         </Routes>
       </Layout>
     </Router>

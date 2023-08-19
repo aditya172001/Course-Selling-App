@@ -2,10 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Card, Typography } from "@mui/material";
+import { useSetRecoilState } from "recoil";
+import { registerState } from "../recoil/myatoms";
 
 const postURL = "http://localhost:3000/user/signup";
 
-export default function Register({ setIsRegistered }) {
+export default function Register() {
+  const setIsRegistered = useSetRecoilState(registerState);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

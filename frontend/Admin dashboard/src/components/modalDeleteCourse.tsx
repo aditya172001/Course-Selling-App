@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useSetRecoilState } from "recoil";
+import { coursesState } from "../recoil/myatoms";
 
 const style = {
   position: "absolute",
@@ -19,7 +21,8 @@ const style = {
   borderRadius: "10px",
 };
 
-export default function ModalDeleteCourse({ _id, setCourses }) {
+export default function ModalDeleteCourse({ _id }) {
+  const setCourses = useSetRecoilState(coursesState);
   const [open, setOpen] = useState(false);
   const deleteURL = `http://localhost:3000/admin/courses/${_id}`;
 
