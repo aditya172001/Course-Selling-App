@@ -16,15 +16,22 @@ exports.deleteCourse = exports.getAllCourses = exports.updateCourse = exports.cr
 const admin_1 = require("../models/admin");
 const course_1 = require("../models/course");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const courselling_types_1 = require("@adityakumar172001/courselling_types");
 const adminSceret = "qwerty";
 function adminSignup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { username, password } = req.body;
         try {
+            // Validate request body using signupSchema
+            const parsed = courselling_types_1.signupSchema.safeParse(req.body);
+            if (!parsed.success)
+                return res.status(401).json({ message: "Unauthorized" });
+            const { username, password } = parsed.data;
+            // Check if admin with the same username already exists
             const admin = yield admin_1.Admin.findOne({ username });
             if (admin) {
-                return res.status(400).json({ message: "User already exists" });
+                return res.status(409).json({ message: "User already exists" });
             }
+            // Create a new admin
             const newAdmin = new admin_1.Admin({ username, password });
             yield newAdmin.save();
             res.json({ message: "Admin created successfully" });
@@ -37,12 +44,18 @@ function adminSignup(req, res) {
 exports.adminSignup = adminSignup;
 function adminLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { username, password } = req.body;
         try {
+            // Validate request body using loginSchema
+            const parsed = courselling_types_1.loginSchema.safeParse(req.body);
+            if (!parsed.success)
+                return res.status(401).json({ message: "Unauthorized" });
+            const { username, password } = parsed.data;
+            // Check admin's credentials
             const admin = yield admin_1.Admin.findOne({ username, password });
             if (!admin) {
                 return res.status(404).json({ message: "User not found" });
             }
+            // Create JWT token
             const payload = { username };
             const options = { expiresIn: "1h" };
             const token = jsonwebtoken_1.default.sign(payload, adminSceret, options);
@@ -56,8 +69,13 @@ function adminLogin(req, res) {
 exports.adminLogin = adminLogin;
 function createCourse(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const newCourse = new course_1.Course(req.body);
         try {
+            // Validate request body using courseSchema
+            const parsed = courselling_types_1.courseSchema.safeParse(req.body);
+            if (!parsed.success)
+                return res.status(400).json({ message: "Invalid data" });
+            const newCourse = new course_1.Course(parsed.data);
+            // Save the new course
             yield newCourse.save();
             res.json({
                 message: "Course created successfully",
@@ -72,12 +90,22 @@ function createCourse(req, res) {
 exports.createCourse = createCourse;
 function updateCourse(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { courseId } = req.params;
         try {
-            const course = yield course_1.Course.findByIdAndUpdate(courseId, req.body, {
+            // Validate courseId from params
+            const parsedCourseId = courselling_types_1.courseIdSchema.safeParse(req.params.courseId);
+            if (!parsedCourseId.success)
+                return res.status(400).json({ message: "Bad Request" });
+            const courseId = parsedCourseId.data;
+            // Validate course data from body
+            const parsedCourseData = courselling_types_1.courseSchema.safeParse(req.body);
+            if (!parsedCourseData.success)
+                return res.status(400).json({ message: "Invalid data" });
+            // Update the course
+            const course = yield course_1.Course.findByIdAndUpdate(courseId, parsedCourseData.data, {
                 new: true,
                 runValidators: true,
             });
+            // Handle course not found
             if (!course) {
                 return res.status(404).json({ message: "Course not found" });
             }
@@ -103,8 +131,13 @@ function getAllCourses(req, res) {
 exports.getAllCourses = getAllCourses;
 function deleteCourse(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { courseId } = req.params;
         try {
+            // Validate courseId from params
+            const parsedCourseId = courselling_types_1.courseIdSchema.safeParse(req.params.courseId);
+            if (!parsedCourseId.success)
+                return res.status(400).json({ message: "Bad Request" });
+            const courseId = parsedCourseId.data;
+            // Delete the course
             const courses = yield course_1.Course.findByIdAndDelete(courseId);
             res.json({ message: "Course deleted successfully" });
         }

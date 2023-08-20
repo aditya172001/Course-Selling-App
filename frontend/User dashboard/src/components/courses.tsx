@@ -3,11 +3,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { coursesState } from "../recoil/myatoms";
+import { courseType } from "@adityakumar172001/courselling_types";
 
 const getCoursesURL = "http://localhost:3000/user/courses";
 
 export default function Courses() {
-  const [courses, setCourses] = useRecoilState(coursesState);
+  const [courses, setCourses] = useRecoilState<courseType[]>(coursesState);
   useEffect(() => {
     axios
       .get(getCoursesURL, {
