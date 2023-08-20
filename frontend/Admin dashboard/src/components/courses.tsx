@@ -32,7 +32,7 @@ export default function Courses() {
         {courses.map((course) => (
           <Course
             key={course._id}
-            _id={course._id}
+            _id={course._id!}
             title={course.title}
             description={course.description}
             imageURL={course.imageURL}

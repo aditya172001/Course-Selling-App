@@ -20,7 +20,7 @@ exports.courseSchema = zod_1.z.object({
     _id: exports.courseIdSchema.optional(),
     title: zod_1.z.string(),
     description: zod_1.z.string(),
-    price: zod_1.z.number(),
+    price: zod_1.z.union([zod_1.z.number(), zod_1.z.literal("")]),
     imageURL: zod_1.z.string().url(),
     isPublished: zod_1.z.boolean(),
 });

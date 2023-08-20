@@ -20,7 +20,12 @@ const style = {
   borderRadius: "10px",
 };
 
-export default function ModalBuyCourse({ _id }) {
+interface ModalBuyCourseProps {
+  _id: string;
+}
+
+export default function ModalBuyCourse(props: ModalBuyCourseProps) {
+  const { _id } = props;
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const buyURL = `http://localhost:3000/user/courses/${_id}`;

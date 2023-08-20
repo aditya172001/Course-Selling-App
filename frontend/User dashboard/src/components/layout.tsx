@@ -78,7 +78,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function Layout({ children }) {
+interface LayoutProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: any;
+}
+
+export default function Layout(props: LayoutProps) {
+  const { children } = props;
   const isRegistered = useRecoilValue(registerState);
   const isLoggedin = useRecoilValue(loginState);
   const [open, setOpen] = useRecoilState(drawerOpenState);

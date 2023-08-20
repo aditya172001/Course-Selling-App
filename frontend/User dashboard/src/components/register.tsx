@@ -15,7 +15,7 @@ export default function Register() {
   function goToLogin() {
     navigate("/login");
   }
-  function handleRegister(e) {
+  function handleRegister(e: { preventDefault: () => void }) {
     e.preventDefault();
     const newUser = {
       username,

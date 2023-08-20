@@ -5,7 +5,14 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-export default function PurchasedCourse({ title, description, imageURL }) {
+interface PurchasedCourseProps {
+  title: string;
+  description: string;
+  imageURL: string;
+}
+
+export default function PurchasedCourse(props: PurchasedCourseProps) {
+  const { title, description, imageURL } = props;
   return (
     <Card sx={{ minWidth: "300px", maxWidth: "300px", margin: "10px" }}>
       <CardMedia sx={{ height: "150px" }} image={imageURL} title={title} />

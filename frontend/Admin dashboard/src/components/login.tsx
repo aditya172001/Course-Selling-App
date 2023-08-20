@@ -16,7 +16,7 @@ export default function Register() {
   function goToRegister() {
     navigate("/register");
   }
-  function handleLogin(e) {
+  function handleLogin(e: { preventDefault: () => void }) {
     e.preventDefault();
     const newAdmin = {
       username,

@@ -24,7 +24,7 @@ export const courseSchema = z.object({
   _id: courseIdSchema.optional(),
   title: z.string(),
   description: z.string(),
-  price: z.number(),
+  price: z.union([z.number(), z.literal("")]),
   imageURL: z.string().url(),
   isPublished: z.boolean(),
 });

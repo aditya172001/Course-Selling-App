@@ -21,7 +21,12 @@ const style = {
   borderRadius: "10px",
 };
 
-export default function ModalDeleteCourse({ _id }) {
+interface ModalDeleteCourseProps {
+  _id: string;
+}
+
+export default function ModalDeleteCourse(props: ModalDeleteCourseProps) {
+  const { _id } = props;
   const setCourses = useSetRecoilState(coursesState);
   const [open, setOpen] = useState(false);
   const deleteURL = `http://localhost:3000/admin/courses/${_id}`;

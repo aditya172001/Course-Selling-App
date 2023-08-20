@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useSetRecoilState } from "recoil";
 import { coursesState } from "../recoil/myatoms";
+import { courseType } from "@adityakumar172001/courselling_types";
 
 export default function FormUpdateCourse() {
   const setCourses = useSetRecoilState(coursesState);
@@ -21,10 +22,10 @@ export default function FormUpdateCourse() {
   const [price, setPrice] = useState<"" | number>("");
   const [isPublished, setIsPublished] = useState<boolean>(false);
   const location = useLocation();
-  const courseId = location.state;
+  const courseId: string = location.state;
   const putURL = `http://localhost:3000/admin/courses/${courseId}`;
 
-  function handleAddCourse(e) {
+  function handleAddCourse(e: { preventDefault: () => void }) {
     e.preventDefault();
     const updatedCourse = {
       title,
@@ -42,7 +43,9 @@ export default function FormUpdateCourse() {
       .then(() => {
         setCourses((courses) =>
           courses.map((course) =>
-            course._id !== courseId ? course : { ...course, ...updatedCourse }
+            course._id !== courseId
+              ? course
+              : ({ ...course, ...updatedCourse } as courseType)
           )
         );
         navigate("/courses");

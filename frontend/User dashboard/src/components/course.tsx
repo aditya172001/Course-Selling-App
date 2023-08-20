@@ -6,7 +6,16 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-export default function Course({ _id, title, description, price, imageURL }) {
+interface CourseProps {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  imageURL: string;
+}
+
+export default function Course(props: CourseProps) {
+  const { _id, title, description, price, imageURL } = props;
   const navigate = useNavigate();
   function goToBuyCourse() {
     navigate("/courses/buy", {

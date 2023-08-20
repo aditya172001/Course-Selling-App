@@ -27,20 +27,20 @@ export declare const courseSchema: z.ZodObject<{
     _id: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
     title: z.ZodString;
     description: z.ZodString;
-    price: z.ZodNumber;
+    price: z.ZodUnion<[z.ZodNumber, z.ZodLiteral<"">]>;
     imageURL: z.ZodString;
     isPublished: z.ZodBoolean;
 }, "strip", z.ZodTypeAny, {
     title: string;
     description: string;
-    price: number;
+    price: number | "";
     imageURL: string;
     isPublished: boolean;
     _id?: string | undefined;
 }, {
     title: string;
     description: string;
-    price: number;
+    price: number | "";
     imageURL: string;
     isPublished: boolean;
     _id?: string | undefined;

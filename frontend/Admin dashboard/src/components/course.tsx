@@ -7,7 +7,15 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import ModalDeleteCourse from "./modalDeleteCourse";
 
-export default function Course({ _id, title, description, imageURL }) {
+interface courseProps {
+  _id: string;
+  title: string;
+  description: string;
+  imageURL: string;
+}
+
+export default function Course(props: courseProps) {
+  const { _id, title, description, imageURL } = props;
   const navigate = useNavigate();
   function handleUpdate() {
     navigate("/courses/update", { state: _id });
