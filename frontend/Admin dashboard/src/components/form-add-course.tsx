@@ -114,7 +114,7 @@ export default function FormAddCourse() {
           <Select
             labelId="demo-simple-select-label"
             value={isPublished}
-            onChange={(e) => setIsPublished(e.target.value as boolean)}
+            onChange={(e) => setIsPublished(e.target.value === "true")}
             fullWidth
             margin="dense"
           >

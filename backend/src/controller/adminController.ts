@@ -65,7 +65,6 @@ export async function createCourse(req: Request, res: Response) {
     if (!parsed.success)
       return res.status(400).json({ message: "Invalid data" });
     const newCourse = new Course(parsed.data);
-
     // Save the new course
     await newCourse.save();
     res.json({
