@@ -77,7 +77,7 @@ Welcome to the Course Selling App project! This application is built using the M
 5. **Start the backend server:**
 
    ```bash
-   cd ../../backend
+   cd backend
    npm run dev
    ```
 
