@@ -1,6 +1,6 @@
-# Course Selling Platform
+# Course Selling App
 
-Welcome to the Course Selling Platform project! This application is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) with JWT authentication, Zod for backend validation, and Recoil for state management. The platform consists of two separate frontends – one for users and another for administrators.
+Welcome to the Course Selling App project! This application is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) with JWT authentication, Zod for backend validation, and Recoil for state management. The app consists of two separate frontends – one for users and another for administrators.
 
 ## Features
 
